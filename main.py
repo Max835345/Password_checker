@@ -1,19 +1,22 @@
 import tkinter as tk
 from tkinter import messagebox
 import hashlib
+import uuid
 
-hashed_password = hashlib.md5()
-hashed_password.update(b"super_secret_password")
-password = hashed_password.hexdigest()
+salt = uuid.uuid4().hex
+password = "123"
+hashed_password = hashlib.md5(salt.encode() + password.encode()).hexdigest() + ':' + salt
+print(hashed_password)
 
 
 def check_password():
     entered_password = password_entry.get()
-    entered_password_hash = hashlib.md5(entered_password.encode()).hexdigest()
-    if entered_password_hash == password:
-        messagebox.showinfo("Result", "Password is correct!")
+    entered_password_hash = hashlib.md5(salt.encode() + entered_password.encode()).hexdigest() + ':' + salt
+    print(entered_password_hash)
+    if entered_password_hash == hashed_password:
+        messagebox.showinfo("Результат", "Пароль верен")
     else:
-        messagebox.showwarning("Result", "Password is incorrect!")
+        messagebox.showwarning("Результат", "Пароль не верен")
 
 
 root = tk.Tk()

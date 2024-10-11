@@ -18,7 +18,6 @@ def check_password():
     else:
         messagebox.showwarning("Результат", "Пароль не верен")
 
-
 root = tk.Tk()
 root.title("Password Checker")
 
